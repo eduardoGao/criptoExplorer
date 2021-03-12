@@ -1,5 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import { ThemeProvider } from 'styled-components';
+import App from './components/App/App';
+import GlobalStyle, { theme } from './globals';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <>
+    <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </>,
+  document.getElementById('app'),
+);
