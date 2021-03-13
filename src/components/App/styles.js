@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Main = styled.main`
   background: ${({ theme: { color } }) => color.gradient};
   min-height: 100vh;
-  padding: 1.5em 0;
+  padding: 1.5em 0 0;
 `;
 
 export const TitleMain = styled.h1`
@@ -31,6 +31,7 @@ export const Input = styled.input`
   padding: 1em 1.5em;
   border: 1px solid ${({ theme: { color } }) => color.secondary};
   border-radius: 8px;
+  color: ${({ theme: { color } }) => color.light};
 
   &::placeholder {
     color: ${({ theme: { color } }) => color.light};
@@ -38,4 +39,24 @@ export const Input = styled.input`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: .9em;
   }
+`;
+
+export const Loader = styled.div`
+  color: ${({ theme: { color } }) => color.light};
+  margin: 1em auto;
+  text-align: center;
+`;
+
+export const Button = styled.button`
+  font-family: inherit;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 1em 3em;
+  border: none;
+  border-radius: 5px;
+  background: ${({ theme: { color } }) => color.primary};
+  color: ${({ theme: { color } }) => color.light};
+  margin: 2em auto;
+  display: block;
+  cursor: pointer;
 `;

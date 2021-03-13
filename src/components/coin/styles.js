@@ -24,7 +24,7 @@ export const CoinCointainer = styled.section`
   }
 `;
 
-export const CoinData = styled.section`
+export const CoinData = styled.div`
   min-width: 80%;
   display: flex;
   justify-content: space-between;
