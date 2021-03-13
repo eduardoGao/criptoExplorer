@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Coin from '../coin';
+import Footer from '../footer';
 import {
   Main, TitleMain, Subtitle, Label, Input, Loader, Button,
 } from './styles';
@@ -9,18 +10,23 @@ function App() {
     data: [],
     loading: true,
     error: null,
+    page: 1,
   });
 
   const [search, setSearch] = useState('');
 
-  useEffect(() => {
+  const fetchCoins = () => {
     try {
-      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=mxn&order=market_cap_desc&per_page=10&page=1&sparkline=false')
+      fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=mxn&order=market_cap_desc&per_page=15&page=${coins.page}&sparkline=false`)
         .then((response) => response.json())
         .then((data) => {
           setCoins({
-            data,
+            data: [].concat(
+              coins.data,
+              data,
+            ),
             loading: false,
+            page: coins.page + 1,
           });
         });
     } catch (error) {
@@ -28,6 +34,10 @@ function App() {
         error,
       });
     }
+  };
+
+  useEffect(() => {
+    fetchCoins();
   }, []);
 
   const handleSearch = (e) => {
@@ -62,7 +72,8 @@ function App() {
           ))
         }
       </section>
-      {!coins.loading && <Button type="button">Cargar más</Button>}
+      {!coins.loading && <Button type="button" onClick={() => fetchCoins()}>Cargar más</Button>}
+      <Footer />
     </Main>
   );
 }

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const Main = styled.main`
   background: ${({ theme: { color } }) => color.gradient};
   min-height: 100vh;
-  padding: 1.5em 0;
+  padding: 1.5em 0 0;
 `;
 
 export const TitleMain = styled.h1`
