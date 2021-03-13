@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import Coin from '../coin';
 import {
-  Main, TitleMain, Subtitle, Label, Input,
+  Main, TitleMain, Subtitle, Label, Input, Loader, Button,
 } from './styles';
 
 function App() {
-  const [coins, setCoins] = useState([]);
+  const [coins, setCoins] = useState({
+    data: [],
+    loading: true,
+    error: null,
+  });
 
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=mxn&order=market_cap_desc&per_page=20&page=1&sparkline=false')
-      .then((response) => response.json())
-      .then((data) => {
-        setCoins(data);
-        console.log(data);
+    try {
+      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=mxn&order=market_cap_desc&per_page=10&page=1&sparkline=false')
+        .then((response) => response.json())
+        .then((data) => {
+          setCoins({
+            data,
+            loading: false,
+          });
+        });
+    } catch (error) {
+      setCoins({
+        error,
       });
+    }
   }, []);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  const filteredCoins = coins.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
+  const filteredCoins = coins.data.filter((coin) => coin.name.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <Main>
@@ -33,6 +45,8 @@ function App() {
       </Label>
 
       <section>
+        {coins.loading && <Loader>Cargando...</Loader>}
+        {coins.error && <span>{coins.error}</span>}
         {
           filteredCoins.map((coin) => (
             <Coin
@@ -48,6 +62,7 @@ function App() {
           ))
         }
       </section>
+      {!coins.loading && <Button type="button">Cargar más</Button>}
     </Main>
   );
 }
